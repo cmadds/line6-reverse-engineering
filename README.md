@@ -16,7 +16,7 @@ This repo contains analysis of Line 6's legacy 32-bit macOS software that no lon
 
 1. Turn OFF your POD XT
 2. Hold SAVE + all four  UP buttons together
-![POD XT](images/podxt_buttons.jpg)
+![POD XT](images/podxt_buttons.jpeg)
 3. Turn ON whilst holding all buttons
 4. Release when Line 6 logo appears
 5. Wait for "standard model set loaded" message
