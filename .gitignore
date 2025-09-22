@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Analysis artifacts
+*.dmg
+*.pkg
+extracted/binaries/
+extracted/drivers/
+line6_analysis/
+
+# Firmware files (large)
+firmware/*.xtf
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
