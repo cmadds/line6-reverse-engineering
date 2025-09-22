@@ -1,10 +1,10 @@
-# Line 6 Legacy Software Reverse Engineering
+# Line6 Legacy Software Reverse Engineering
 
-Reverse engineering analysis and tools for Line 6 POD XT legacy software. Born out of necessity when trying to factory reset a POD XT on modern macOS.
+Reverse engineering analysis and tools for Line 6 POD XT legacy software. Created this out of necessity when trying to factory reset a POD XT on modern macOS.
 
 ## What's Here
 
-This repo contains analysis of Line 6's legacy 32-bit macOS software that no longer runs on current systems:
+This repo contains analysis of Line6's legacy 32-bit macOS software that no longer runs on current systems:
 
 - **Line 6 Monkey 1.78** - Device management app (32-bit Intel binary)
 - **PODxt_3_01.xtf** - Firmware file (proprietary IFF format)
@@ -16,10 +16,11 @@ This repo contains analysis of Line 6's legacy 32-bit macOS software that no lon
 
 1. Turn OFF your POD XT
 2. Hold SAVE + all four  UP buttons together
-![POD XT](images/podxt_buttons.jpeg)
 3. Turn ON whilst holding all buttons
 4. Release when Line 6 logo appears
 5. Wait for "standard model set loaded" message
+
+![POD XT](images/podxt_buttons.jpeg)
 
 Done. All factory presets restored, custom ones wiped.
 
