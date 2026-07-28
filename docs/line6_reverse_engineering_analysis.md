@@ -185,5 +185,5 @@ mkdir -p ~/line6_research/{binaries,firmware,drivers,docs,tools}
 - Legacy macOS development guides
 
 ---
-*Analysis Date: $(date)*
-*Analyst: Reverse Engineering Assistant*
+
+Notes from reverse engineering `PODxt_3_01.xtf` and the Line 6 Monkey 1.78 / driver 7.6.8 packages on a POD XT. One firmware version, one unit — corrections welcome.
