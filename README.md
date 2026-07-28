@@ -18,6 +18,8 @@ That's it. Factory presets are back, and anything custom you saved is wiped.
 
 ![POD XT button combo](images/podxt_buttons.jpeg)
 
+**Which units?** Confirmed on my POD XT (the "bean"). The POD XT Live and POD XT Pro run the same firmware family and the same SAVE + UP combo is widely reported to work, though I haven't tested them personally. The button *layout* differs across those units, so "all four UP buttons" maps to whatever the four model/preset UP buttons are on yours.
+
 ## What's in here
 
 ```
@@ -27,7 +29,7 @@ scripts/   The shell script I used to extract and set up the old software
 images/    Photos, including the button combo above
 ```
 
-Note: the Line 6 software and firmware files aren't in the repo — they're Line 6's, not mine to redistribute. The scripts expect you to supply your own copies (`Line 6 Monkey 1.78.dmg` and friends in `~/Downloads`).
+Note: the Line 6 software and firmware files aren't in the repo — they're Line 6's, not mine to redistribute. The scripts expect you to supply your own copies (`Line 6 Monkey 1.78.dmg` and friends in `~/Downloads`). Grab them from Line 6's own software page: <https://line6.com/software/> (filter by POD XT). Line 6 Monkey and the legacy drivers are still listed there.
 
 ## The tools
 
@@ -63,10 +65,11 @@ A word of caution: the original Line 6 software is old, 32-bit, and unsigned. I 
 
 ## Docs
 
+- [Firmware format (.xtf / L6FF)](docs/firmware-format.md) — how the firmware file is laid out
 - [Full analysis](docs/line6_reverse_engineering_analysis.md)
 - [Short summary](docs/line6_reverse_engineering_summary.md)
 - [Factory reset guide](docs/podxt_factory_reset_guide.md)
 
 ## Licence
 
-Research and interoperability work, shared in case it helps someone else get old Line 6 gear working again. The reverse engineering was done for interoperability under fair use; the Line 6 software itself belongs to Line 6.
+The code and docs here are [MIT licensed](LICENSE) — use them however you like. This is research and interoperability work, shared in case it helps someone else get old Line 6 gear working again. The reverse engineering was done for interoperability under fair use; the Line 6 software, firmware, and drivers themselves belong to Line 6 / Yamaha and are not distributed here.
