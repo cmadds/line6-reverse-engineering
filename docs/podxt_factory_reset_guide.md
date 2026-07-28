@@ -1,6 +1,6 @@
 # POD XT Factory Reset Guide
 
-## ✅ Verified Working Method
+## Verified Working Method
 
 **This procedure has been tested and confirmed working:**
 
@@ -12,10 +12,10 @@
 5. **Wait** for "standard model set loaded" message
 
 ### Expected Results:
-- ✅ Line 6 logo appears during reset
-- ✅ "Standard model set loaded" confirmation message
-- ✅ All factory presets restored
-- ❌ All custom presets erased
+- Line 6 logo appears during reset
+- "Standard model set loaded" confirmation message
+- All factory presets restored
+- All custom presets erased
 
 ## Alternative Methods
 
@@ -76,4 +76,4 @@ After factory reset:
 
 ---
 
-**This guide was created through reverse engineering analysis of Line 6 Monkey software and verified through successful factory reset.**
+The "Verified Working Method" up top is the one I actually confirmed on my own POD XT. Methods 2–4 are things I tried along the way — left in as a fallback in case the main one doesn't work on a different unit, but I can't vouch for them.

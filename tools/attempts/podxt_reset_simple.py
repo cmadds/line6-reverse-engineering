@@ -11,6 +11,6 @@ if device:
     device.set_configuration()
     # Line 6 SysEx factory reset: F0 00 01 0C 00 02 00 01 F7
     device.write(1, [0xf0, 0x00, 0x01, 0x0c, 0x00, 0x02, 0x00, 0x01, 0xf7])
-    print("✅ Factory reset sent to POD XT")
+    print("Factory reset sent to POD XT")
 else:
-    print("❌ POD XT not found")
+    print("POD XT not found")

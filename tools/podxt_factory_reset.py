@@ -35,16 +35,16 @@ def find_podxt():
 
 def factory_reset_podxt():
     """Perform factory reset on POD XT"""
-    print("🎸 POD XT Factory Reset Utility")
+    print("POD XT Factory Reset Utility")
     print("=" * 30)
     
     # Find device
     device, product_id = find_podxt()
     if not device:
-        print("❌ No POD XT found. Please connect device and try again.")
+        print("No POD XT found. Please connect device and try again.")
         return False
     
-    print(f"✅ Found POD XT (Product ID: 0x{product_id:04x})")
+    print(f"Found POD XT (Product ID: 0x{product_id:04x})")
     
     try:
         # Detach kernel driver if active
@@ -63,38 +63,38 @@ def factory_reset_podxt():
         )
         
         if not ep_out:
-            print("❌ Could not find output endpoint")
+            print("Could not find output endpoint")
             return False
         
-        print("⚠️  WARNING: This will erase ALL presets and restore factory defaults!")
+        print("WARNING: This will erase ALL presets and restore factory defaults!")
         response = input("Continue? (yes/no): ").lower().strip()
         
         if response != 'yes':
-            print("❌ Factory reset cancelled")
+            print("Factory reset cancelled")
             return False
         
-        print("🔄 Sending factory reset command...")
+        print("Sending factory reset command...")
         
         # Send factory reset command
         ep_out.write(FACTORY_RESET_CMD)
         
-        print("✅ Factory reset command sent successfully!")
-        print("📝 Please wait for device to complete reset (may take 30-60 seconds)")
-        print("🔌 Device may disconnect and reconnect during process")
+        print("Factory reset command sent successfully!")
+        print("Please wait for device to complete reset (may take 30-60 seconds)")
+        print("Device may disconnect and reconnect during process")
         
         return True
         
     except usb.core.USBError as e:
-        print(f"❌ USB Error: {e}")
+        print(f"USB Error: {e}")
         return False
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         return False
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--force":
         # Skip confirmation for automated use
-        print("🤖 Force mode enabled")
+        print("Force mode enabled")
     
     success = factory_reset_podxt()
     sys.exit(0 if success else 1)

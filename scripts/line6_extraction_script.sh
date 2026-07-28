@@ -7,7 +7,7 @@ DOWNLOADS_DIR="$HOME/Downloads"
 ANALYSIS_DIR="$HOME/Desktop/Development/line6_analysis"
 TOOLS_DIR="$ANALYSIS_DIR/tools"
 
-echo "🔧 Line 6 Legacy Software Reverse Engineering Setup"
+echo "Line 6 Legacy Software Reverse Engineering Setup"
 echo "=================================================="
 
 # Create analysis directory structure
@@ -16,10 +16,10 @@ mkdir -p "$TOOLS_DIR"
 
 cd "$ANALYSIS_DIR"
 
-echo "📁 Extracting Line 6 Monkey Application..."
+echo "Extracting Line 6 Monkey Application..."
 # Extract Line 6 Monkey
 if [ -d "/Volumes/Line 6 Monkey" ]; then
-    echo "✅ Line 6 Monkey DMG already mounted"
+    echo "Line 6 Monkey DMG already mounted"
 else
     hdiutil attach "$DOWNLOADS_DIR/Line 6 Monkey 1.78.dmg" -readonly
 fi
@@ -34,21 +34,21 @@ cd ../../..
 cp "extracted/monkey_pkg/Line_6_Monkey.pkg/Line 6 Monkey.app/Contents/MacOS/Line 6 Monkey" binaries/
 cp "extracted/monkey_pkg/Line_6_Monkey.pkg/Line 6 Monkey.app/Contents/Info.plist" binaries/
 
-echo "📁 Extracting Line 6 Audio-MIDI Driver..."
+echo "Extracting Line 6 Audio-MIDI Driver..."
 # Extract Audio-MIDI Driver
 if [ -d "/Volumes/Line 6 Audio-Midi Driver" ]; then
-    echo "✅ Line 6 Audio-MIDI Driver DMG already mounted"
+    echo "Line 6 Audio-MIDI Driver DMG already mounted"
 else
     hdiutil attach "$DOWNLOADS_DIR/Line 6 Audio-Midi Driver 7.6.8.dmg" -readonly
 fi
 
 pkgutil --expand "/Volumes/Line 6 Audio-Midi Driver/Line 6 Audio-Midi Driver.pkg" extracted/driver_pkg
 
-echo "📁 Copying firmware file..."
+echo "Copying firmware file..."
 # Copy firmware file
 cp "$DOWNLOADS_DIR/PODxt_3_01.xtf" firmware/
 
-echo "🔍 Performing initial analysis..."
+echo "Performing initial analysis..."
 
 # Analyze binaries
 echo "Binary Analysis:" > reports/initial_analysis.txt
@@ -78,7 +78,7 @@ if [ -f "binaries/Line 6 Monkey" ]; then
     strings "binaries/Line 6 Monkey" | grep -i -E "(usb|line|pod|device|firmware)" | head -20 >> reports/initial_analysis.txt
 fi
 
-echo "🔧 Creating analysis tools..."
+echo "Creating analysis tools..."
 
 # Create quick analysis script
 cat > tools/quick_analyze.sh << 'EOF'
@@ -87,7 +87,7 @@ cat > tools/quick_analyze.sh << 'EOF'
 
 ANALYSIS_DIR="$HOME/Desktop/Development/line6_analysis"
 
-echo "🔍 Line 6 Quick Analysis"
+echo "Line 6 Quick Analysis"
 echo "======================="
 
 if [ "$1" = "strings" ]; then
@@ -116,7 +116,7 @@ cat > tools/usb_monitor.sh << 'EOF'
 #!/bin/bash
 # USB device monitoring for Line 6 devices
 
-echo "🔌 USB Device Monitor for Line 6"
+echo "USB Device Monitor for Line 6"
 echo "==============================="
 
 # Look for Line 6 devices
@@ -136,21 +136,21 @@ EOF
 
 chmod +x tools/usb_monitor.sh
 
-echo "✅ Analysis setup complete!"
+echo "Analysis setup complete!"
 echo ""
-echo "📊 Analysis Summary:"
+echo "Analysis Summary:"
 echo "==================="
 cat reports/initial_analysis.txt
 
 echo ""
-echo "🛠️  Available Tools:"
+echo "Available Tools:"
 echo "=================="
 echo "1. Analysis report: $ANALYSIS_DIR/reports/initial_analysis.txt"
 echo "2. Python analyzer: python3 ~/Desktop/Development/line6_analysis_tools.py <file>"
 echo "3. Quick analyzer: $ANALYSIS_DIR/tools/quick_analyze.sh [strings|firmware|binary]"
 echo "4. USB monitor: $ANALYSIS_DIR/tools/usb_monitor.sh"
 echo ""
-echo "📁 Directory Structure:"
+echo "Directory Structure:"
 echo "======================"
 echo "binaries/  - Extracted executables"
 echo "firmware/  - Firmware files (.xtf)"
@@ -160,7 +160,7 @@ echo "reports/   - Analysis reports"
 echo "tools/     - Analysis utilities"
 
 echo ""
-echo "🚀 Next Steps:"
+echo "Next Steps:"
 echo "============="
 echo "1. Run: $ANALYSIS_DIR/tools/quick_analyze.sh strings"
 echo "2. Run: $ANALYSIS_DIR/tools/quick_analyze.sh firmware"
