@@ -1,8 +1,8 @@
 # Line 6 Legacy Software Reverse Engineering - Complete Analysis
 
-## Executive Summary
+## Summary
 
-Successfully analyzed three Line 6 legacy software components for 32-bit macOS:
+A shorter write-up of the three Line 6 legacy components I looked at, all 32-bit macOS:
 
 1. **Line 6 Monkey 1.78** - Device management application (32-bit Intel Mach-O)
 2. **PODxt_3_01.xtf** - Firmware file (IFF format, version 3.01)  
@@ -180,6 +180,4 @@ Device Type 4: Audio samples/impulses (64KB blocks)
 
 ---
 
-**Analysis Complete:** All three Line 6 legacy components successfully reverse engineered with comprehensive tooling and documentation provided for continued research.
-
-**Key Achievement:** Established complete analysis environment with automated extraction, parsing tools, and detailed technical documentation for legacy 32-bit macOS Line 6 software ecosystem.
+That's the short version. The [full analysis](line6_reverse_engineering_analysis.md) has the tool commands and deeper notes; the [firmware format doc](firmware-format.md) covers the `.xtf` layout on its own.
