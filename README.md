@@ -1,140 +1,72 @@
-# Line6 Legacy Software Reverse Engineering
+# Resetting a Line 6 POD XT on modern macOS
 
-Reverse engineering analysis and tools for Line 6 POD XT legacy software. Created this out of necessity when trying to factory reset a POD XT on modern macOS.
+I have an old Line 6 POD XT that needed a factory reset. The catch: Line 6's software for managing it is 32-bit Intel Mac software from the late 2000s, and it won't launch on anything past macOS Mojave. No official tool, no obvious way in.
 
-## What's Here
+So I went digging — pulled apart the old apps, the driver, and the firmware file to figure out how the thing actually talks to a computer. This repo is what came out of that: the notes, the tools I wrote along the way, and — most usefully — the factory reset method that turned out not to need a computer at all.
 
-This repo contains analysis of Line6's legacy 32-bit macOS software that no longer runs on current systems:
+## Just want to factory reset your POD XT?
 
-- **Line 6 Monkey 1.78** - Device management app (32-bit Intel binary)
-- **PODxt_3_01.xtf** - Firmware file (proprietary IFF format)
-- **Line 6 Audio-MIDI Driver 7.6.8** - USB audio driver
+You don't need any of the software. Do this on the unit itself:
 
-## POD XT Factory Reset (The Important Bit)
+1. Turn the POD XT **off**.
+2. Hold **SAVE** + all four **UP** buttons at once.
+3. Keep holding and turn it **on**.
+4. Let go when the Line 6 logo appears.
+5. Wait for **"standard model set loaded."**
 
-**This method actually works:**
+That's it. Factory presets are back, and anything custom you saved is wiped.
 
-1. Turn OFF your POD XT
-2. Hold SAVE + all four  UP buttons together
-3. Turn ON whilst holding all buttons
-4. Release when Line 6 logo appears
-5. Wait for "standard model set loaded" message
+![POD XT button combo](images/podxt_buttons.jpeg)
 
-![POD XT](images/podxt_buttons.jpeg)
-
-Done. All factory presets restored, custom ones wiped.
-
-## What's in the Repo
+## What's in here
 
 ```
-docs/        Analysis documentation
-tools/       Python utilities for parsing firmware
-extracted/   Extracted software bits
-firmware/    Firmware files and analysis
-scripts/     Setup automation
+docs/      Write-ups: full analysis, a shorter summary, and a reset guide
+tools/     Python scripts for parsing the firmware and poking at the hardware
+scripts/   The shell script I used to extract and set up the old software
+images/    Photos, including the button combo above
 ```
 
-## Tools
+Note: the Line 6 software and firmware files aren't in the repo — they're Line 6's, not mine to redistribute. The scripts expect you to supply your own copies (`Line 6 Monkey 1.78.dmg` and friends in `~/Downloads`).
 
-- `line6_analysis_tools.py` - Parses IFF firmware format and analyses Mach-O binaries
-- `podxt_factory_reset.py` - Factory reset utilities (though the manual method above works fine)
-- `line6_extraction_script.sh` - Sets up the whole analysis environment
+## The tools
 
-## Technical Findings
+- `tools/line6_analysis_tools.py` — parses the `.xtf` firmware (a Line 6 IFF variant they call L6FF) and inspects the old Mach-O binaries.
+- `tools/podxt_factory_reset.py` and the various `podxt_reset_*.py` — attempts at doing the reset over USB/MIDI. These are the trial-and-error path; the button combo above is what actually worked.
+- `scripts/line6_extraction_script.sh` — mounts and unpacks the legacy DMGs into an analysis folder.
 
-- **USB IDs:** Vendor 0x0e41, Product 0x5044 (POD XT)
-- **Firmware:** Proprietary L6FF format (based on IFF)
-- **Memory:** ~1MB space containing DSP algorithms and samples
-- **Reset:** SAVE + UP button combo during power-on
+## What I found
 
-## Technical Details
+- **The POD XT is USB vendor `0x0e41`, product `0x5044`.**
+- **Firmware** (`PODxt_3_01.xtf`) is an IFF container with an `L6FF` signature — 394,130 bytes, version 1.0.769.0, firmware 3.01. Twenty small device-info chunks up front, then ~393 KB of actual firmware.
+- **Line 6 Monkey** (the management app) is a 32-bit i386 binary that needs macOS 10.5+ and stops running at 10.15.
+- The reset lives in the hardware, not the software — the SAVE + UP combo during power-on does the whole thing.
 
-### Firmware Structure (PODxt_3_01.xtf)
-- IFF container with L6FF signature
-- 394,130 bytes total
-- Version 1.0.769.0 (firmware 3.01)
-- 20 device info chunks plus 393KB of actual firmware data
+## Poking at it yourself
 
-### Line 6 Monkey Analysis
-- 32-bit Intel binary (i386)
-- Requires macOS 10.5+ (won't run on 10.15+)
-- Handles firmware updates and device management
-
-## Setup
+You'll need `pyusb` and `libusb`:
 
 ```bash
 pip3 install pyusb
 brew install libusb
 ```
 
-### Running the Tools
+Then, with a firmware file of your own:
 
 ```bash
 git clone https://github.com/cmadds/line6-reverse-engineering
 cd line6-reverse-engineering
-
-# Set up analysis environment
-./scripts/setup_analysis.sh
-
-# Parse firmware
-python3 tools/line6_analysis_tools.py firmware/PODxt_3_01.xtf
-
-# Check for POD XT
-python3 tools/podxt_factory_reset.py
+python3 tools/line6_analysis_tools.py path/to/PODxt_3_01.xtf
 ```
 
-## Reverse Engineering Approach
+A word of caution: the original Line 6 software is old, 32-bit, and unsigned. I did the messier parts in a throwaway macOS 10.14 VM rather than on my main machine, and I'd suggest the same.
 
-### Static Analysis
-- Used `otool` to inspect Mach-O binaries
-- Extracted strings and analysed patterns
-- Parsed IFF chunks in firmware files
-- Identified USB protocol details
+## Docs
 
-### Dynamic Analysis
-- Monitored USB traffic
-- Traced system calls
-- Runtime debugging where possible
-
-## Security Notes
-
-### Legacy Software Risks
-- 32-bit apps don't run on modern macOS
-- Unsigned kernel extensions blocked by SIP
-- Potential privilege escalation issues
-- USB driver vulnerabilities in old code
-
-### Safer Analysis Environment
-- macOS 10.14 Mojave VM (last version with 32-bit support)
-- Isolated network
-- USB monitoring tools
-
-## Documentation
-
-- [Complete Analysis Report](docs/line6_reverse_engineering_analysis.md)
-- [Technical Summary](docs/line6_reverse_engineering_summary.md)
-- [Factory Reset Guide](docs/podxt_factory_reset_guide.md)
-
-## Contributing
-
-Pull requests welcome for:
-- Additional device support
-- Protocol documentation
-- Modern compatibility layers
-- Security improvements
+- [Full analysis](docs/line6_reverse_engineering_analysis.md)
+- [Short summary](docs/line6_reverse_engineering_summary.md)
+- [Factory reset guide](docs/podxt_factory_reset_guide.md)
 
 ## Licence
 
-Educational and research purposes. Reverse engineering performed under fair use for interoperability.
-
-## What Was Accomplished
-
-- Reverse engineered Line 6 legacy software
-- Documented firmware structure
-- Found working factory reset method
-- Built analysis toolkit
-- Created modern development environment
-
----
-
-Star this if it helped you get your old Line 6 gear working again.
+Research and interoperability work, shared in case it helps someone else get old Line 6 gear working again. The reverse engineering was done for interoperability under fair use; the Line 6 software itself belongs to Line 6.
