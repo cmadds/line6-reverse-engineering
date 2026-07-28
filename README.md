@@ -34,7 +34,8 @@ Note: the Line 6 software and firmware files aren't in the repo — they're Line
 ## The tools
 
 - `tools/line6_analysis_tools.py` — parses the `.xtf` firmware (a Line 6 IFF variant they call L6FF) and inspects the old Mach-O binaries.
-- `tools/podxt_factory_reset.py` and the various `podxt_reset_*.py` — attempts at doing the reset over USB/MIDI. These are the trial-and-error path; the button combo above is what actually worked.
+- `tools/podxt_factory_reset.py` — the cleanest of my attempts to trigger a reset over USB. Kept as the reference version; the button combo above is what actually worked in the end.
+- `tools/attempts/` — the earlier trial-and-error reset scripts (USB, MIDI SysEx, various approaches). None reliably reset the unit, but a couple document the Line 6 SysEx command and USB product IDs, so I left them in.
 - `scripts/line6_extraction_script.sh` — mounts and unpacks the legacy DMGs into an analysis folder.
 
 ## What I found
